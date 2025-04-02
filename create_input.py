@@ -28,8 +28,8 @@ method_seq = vebios_method['Compound'].unique()
 # Filter peptides not in method_seq
 filtered_peptides = all_dig[~all_dig['peptide'].isin(method_seq)]['peptide'].unique()
 
-# Process vebios_method for deepmrm
-vebios_deepmrm = vebios_method[['Compound', 'Precursor..m.z.', 'Product..m.z.']].copy()
+# # Process vebios_method for deepmrm
+vebios_deepmrm = vebios_method[['Compound', 'Precursor (m/z)', 'Product (m/z)']].copy()
 vebios_deepmrm.columns = ['peptide_id', 'precursor_mz', 'product_mz']
 vebios_deepmrm['is_heavy'] = vebios_deepmrm['peptide_id'].str.contains('heavy')
 vebios_deepmrm['peptide_id'] = vebios_deepmrm['peptide_id'].str.replace(r'\[.*?\]', '', regex=True)
@@ -37,15 +37,17 @@ vebios_deepmrm['peptide_id'] = vebios_deepmrm['peptide_id'].str.replace(r'\(.*?\
 vebios_deepmrm['peptide_id'] = vebios_deepmrm['peptide_id'].str.replace('C', 'C[+57]')
 vebios_deepmrm['peptide_id'] = vebios_deepmrm['peptide_id'].str.replace(r'\s+', '', regex=True)
 
-# Find odd numbers of peptides
+
+# # Find odd numbers of peptides
 peptide_counts = vebios_deepmrm.groupby(['peptide_id', 'is_heavy']).size().unstack(fill_value=0)
-odd_pept = peptide_counts[(peptide_counts[False] != peptide_counts[True])].index
+# odd_pept = peptide_counts[(peptide_counts[False] != peptide_counts[True])].index
 
-# Extract odd peptides
-odd_peptides = vebios_deepmrm[vebios_deepmrm['peptide_id'].isin(odd_pept)].sort_values(by=['peptide_id', 'is_heavy'])
+print(peptide_counts)
+# # Extract odd peptides
+# odd_peptides = vebios_deepmrm[vebios_deepmrm['peptide_id'].isin(odd_pept)].sort_values(by=['peptide_id', 'is_heavy'])
 
-# Export results
-vebios_deepmrm[~vebios_deepmrm['peptide_id'].isin(odd_pept)].to_csv("Export/Vebios_ComplemEdge_deepmrm_20241108.csv", index=False)
+# # Export results
+# vebios_deepmrm[~vebios_deepmrm['peptide_id'].isin(odd_pept)].to_csv("Export/Vebios_ComplemEdge_deepmrm_20241108.csv", index=False)
 
-# Display odd peptides
-print(odd_peptides)
+# # Display odd peptides
+# print(odd_peptides)
