@@ -30,8 +30,8 @@ method_seq = vebios_method['Unique_Seq'].unique()
 
 print(vebios_method.head())
 # Filter peptides not in method_seq
-# # Filter peptides not in method_seq
-# filtered_peptides = all_dig[~all_dig['peptide'].isin(method_seq)]['peptide'].unique()
+# Filter peptides not in method_seq
+filtered_peptides = all_dig[~all_dig['peptide'].isin(method_seq)]['peptide'].unique()
 
 # # # Process vebios_method for deepmrm
 # vebios_deepmrm = vebios_method[['Compound', 'Precursor (m/z)', 'Product (m/z)']].copy()
