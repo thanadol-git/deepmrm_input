@@ -27,5 +27,6 @@ dependencies:
     - pyopenms
     - ppx
     - pyteomics
+    - pymzml
 
 
